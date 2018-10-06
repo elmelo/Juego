@@ -1010,14 +1010,14 @@ Con el objetivo de darle un toque innovador al juego se puede personalizar para 
 <head>
     <meta charset="utf-8" />
     <title>Breakout</title>
-
+```
+*Lo primero que haremos sera cambiar el color del fondo definiendo así el background: #000000; lo que hará que quede de color negro.*
+```
     <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
 </head>
 <body>
 <canvas id="myCanvas" width="480" height="320"></canvas>
-```
-*Lo primero que hicimos fue cambiar el color del fondo definiendo así el background: #000000; lo que hará que quede de color negro.*
-```
+
 <script>
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -1025,7 +1025,7 @@ var ballRadius = 10;
 var x = canvas.width/2;
 var y = canvas.height-30;
 ```
-*Como el juego el comportamiento de la pelota es predecible si siempre se lanza en la misma direccion al empezar el juego, se puede agregar un calculo aleatorio para que algunas veces la pelota sea lanzada inicialmente hacia la derecha y en otras hacia la izquierda de la siguiente forma:*
+*Como el juego el comportamiento de la pelota es predecible si siempre se lanza en la misma direccion al empezar el juego, se puede agregar un calculo aleatorio para que algunas veces la pelota sea lanzada inicialmente hacia la derecha y en otras hacia la izquierda.*
 ```
 var dx = (Math.cos( Math.PI * Math.round( Math.random() ) ))* 3;
 var dy = -3;
@@ -1044,7 +1044,7 @@ var brickOffsetLeft = 30;
 var score = 0;
 var lives = 3;
 ```
-*Añadiremos una variable para el color de los ladrillos colorBrick = "#FEDF00"; que hará que inicialmente sean color amarillo.*
+*Añadiremos una variable para el color de los ladrillos colorBrick = "#FEDF00"; que hará que inicialmente sean de color amarillo.*
 ```
 var colorBrick = "#FEDF00";
 
@@ -1084,7 +1084,7 @@ function mouseMoveHandler(e) {
 }
 
 ```
-*También se ha modificado la detección de colisiones actualizando la variable colorBrick de manera aleatoria para que cada vez que un ladrillo sea golpeado por la pelota, esto hará que los demás ladrillos cambien su color, igualmente se ha añadido un incentivo al jugador para romper los ladrillos con una actualizacio0n del paddleWidth haciendo que la paleta aumente su tamaño cada vez que se rompe un ladrillo, adicionalmente se ha cambiado el mensaje de victoria por ¡Haz ganado, Felicidades!*
+*También se ha modificado la detección de colisiones actualizando la variable colorBrick de manera aleatoria para que cada vez que un ladrillo sea golpeado por la pelota los ladrillos cambien su color, igualmente se ha añadido una actualización del paddleWidth haciendo que la paleta aumente su tamaño cada vez que se rompe un ladrillo y se ha cambiado el mensaje de victoria por ¡Haz ganado, Felicidades!*
 ```
 function collisionDetection() {
     for(c=0; c<brickColumnCount; c++) {
@@ -1140,7 +1140,7 @@ function drawBricks() {
     }
 }
 ```
-*En este punto tambien se han cambiado los titulosde Puntaje y Vidas respectivamente*
+*En este punto tambien se han cambiado los titulosde Puntaje y Vidas respectivamente.*
 ```
 function drawScore() {
     ctx.font = "16px Arial";
@@ -1153,7 +1153,7 @@ function drawLives() {
     ctx.fillText("Vidas: "+lives, canvas.width-65, 20);
 }
 ```
-*Como un reto adicional la función draw también ha sido modificada para que se reduzca el tamaño de la paleta cada vez que la pelota colisiona con esta, en caso de que el jugador pierda la paleta volverá a su tamaño inicial,  en este punto también se han cambiado el mensaje de alerta cuando se pierde por ¡Haz perdido, Inténtalo de nuevo! y se ha añadido la línea de código que lanza de  manera aleatoria la bola hacia la izquierda o hacia la derecha cuando empieza una nueva vida.*
+*Como un reto adicional para el jugador la función draw también ha sido modificada para que se reduzca el tamaño de la paleta cada vez que la pelota colisiona con está, en caso de que el jugador pierda la paleta volverá a su tamaño inicial,  el mensaje de alerta cuando se pierde se ha cambiado por ¡Haz perdido, Inténtalo de nuevo! y se ha añadido la línea de código que lanza de  manera aleatoria la bola hacia la izquierda o hacia la derecha cuando empieza una nueva vida.*
 ```
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
