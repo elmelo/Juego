@@ -850,6 +850,9 @@ Con el objetivo de que el jueego cuente con mas oportunidades se le daran vidas 
     var brickOffsetTop = 30;
     var brickOffsetLeft = 30;
     var score = 0;
+ ```
+ *Primero se añade una variable para guardar el número de vidas que tiene en cada momento.*
+ ```
     var lives = 3;
     var bricks = [];
     for(var c=0; c<brickColumnCount; c++) {
@@ -937,11 +940,17 @@ Con el objetivo de que el jueego cuente con mas oportunidades se le daran vidas 
         ctx.fillStyle = "#0095DD";
         ctx.fillText("Score: "+score, 8, 20);
     }
+ ```
+ *Mostrar el número de vidas es prácticamente lo mismo que mostrar el contador de puntos. Para ello se crea la función siguiente:*
+ ```
     function drawLives() {
         ctx.font = "16px Arial";
         ctx.fillStyle = "#0095DD";
         ctx.fillText("Lives: "+lives, canvas.width-65, 20);
     }
+```
+*Para mostrar la cantidad de vidas en pantalla se debe añadir una llamada a drawLives() dentro de draw()*
+```
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBricks();
@@ -960,6 +969,9 @@ Con el objetivo de que el jueego cuente con mas oportunidades se le daran vidas 
             if(x > paddleX && x < paddleX + paddleWidth) {
                 dy = -dy;
             }
+ ```
+*En lugar de terminar el juego inmediatamente, restaremos una vida hasta que ya no quede ninguna y colocaremos la bola y la paleta en la posición inicial cuando el jugador empiece con la vida siguiente en la función draw()*
+```
             else {
                 lives--;
                 if(!lives) {
@@ -983,6 +995,9 @@ Con el objetivo de que el jueego cuente con mas oportunidades se le daran vidas 
         }
         x += dx;
         y += dy;
+ ```
+ *Para ayuda al navegador a refrescar la imagen y tener un mejor rendimiento cambiamos el método setInterval()  por el requestAnimationFrame()*
+ ```
         requestAnimationFrame(draw);
     }
     draw();
