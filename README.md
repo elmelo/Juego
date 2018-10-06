@@ -827,7 +827,7 @@ Para mejorar la interacción del jugador vamos añadir la detección de el movim
 </script>
 ```
 ## LECCION 10
-Con el objetivo de que el jueego cuente con mas oportunidades se le daran vidas al jugador. 
+Con el objetivo de que el juego cuente con mas oportunidades se le daran vidas al jugador. 
 ```
 <script>
     var canvas = document.getElementById("myCanvas");
@@ -1002,3 +1002,212 @@ Con el objetivo de que el jueego cuente con mas oportunidades se le daran vidas 
     }
     draw();
 </script>
+```
+## LECCION 11
+Con el objetivo de darle un toque innovador al juego se puede personalizar para que tenga colores y algunas mecánicas diferentes así como también se pueden adaptar los textos y mensajes de alerta al idioma español.
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Breakout</title>
+```
+*Lo primero que haremos será cambiar el color del fondo definiendo así el background: #000000; lo que hará que quede de color negro.* ```
+    <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="480" height="320"></canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var ballRadius = 10;
+var x = canvas.width/2;
+var y = canvas.height-30;
+```
+*Como el juego el comportamiento de la pelota es predecible si siempre se lanza en la misma direccion al empezar el juego, se puede agregar un calculo aleatorio para que algunas veces la pelota sea lanzada inicialmente hacia la derecha y en otras hacia la izquierda de la siguiente forma:*
+```
+var dx = (Math.cos( Math.PI * Math.round( Math.random() ) ))* 3;
+var dy = -3;
+var paddleHeight = 10;
+var paddleWidth = 75;
+var paddleX = (canvas.width-paddleWidth)/2;
+var rightPressed = false;
+var leftPressed = false;
+var brickRowCount = 5;
+var brickColumnCount = 3;
+var brickWidth = 75;
+var brickHeight = 20;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+var score = 0;
+var lives = 3;
+```
+*Añadiremos una variable para el color de los ladrillos colorBrick = "#FEDF00"; que hará que inicialmente sean color amarillo.*
+```
+var colorBrick = "#FEDF00";
+
+var bricks = [];
+for(c=0; c<brickColumnCount; c++) {
+    bricks[c] = [];
+    for(r=0; r<brickRowCount; r++) {
+        bricks[c][r] = { x: 0, y: 0, status: 1 };
+    }
+}
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+function keyDownHandler(e) {
+    if(e.keyCode == 39) {
+        rightPressed = true;
+    }
+    else if(e.keyCode == 37) {
+        leftPressed = true;
+    }
+}
+function keyUpHandler(e) {
+    if(e.keyCode == 39) {
+        rightPressed = false;
+    }
+    else if(e.keyCode == 37) {
+        leftPressed = false;
+    }
+}
+function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/2;
+    }
+}
+
+```
+*También se ha modificado la detección de colisiones actualizando la variable colorBrick de manera aleatoria para que cada vez que un ladrillo sea golpeado por la pelota, esto hará que los demás ladrillos cambien su color, igualmente se ha añadido un incentivo al jugador para romper los ladrillos con una actualizacio0n del paddleWidth haciendo que la paleta aumente su tamaño cada vez que se rompe un ladrillo, adicionalmente se ha cambiado el mensaje de victoria por ¡Haz ganado, Felicidades!*
+```
+function collisionDetection() {
+    for(c=0; c<brickColumnCount; c++) {
+        for(r=0; r<brickRowCount; r++) {
+            var b = bricks[c][r];
+            if(b.status == 1) {
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                    paddleWidth = paddleWidth * 1.1;
+                    colorBrick = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+
+                    score++;
+                    if(score == brickRowCount*brickColumnCount) {
+                        alert("¡Haz ganado, Felicidades!");
+                        document.location.reload();
+                    }
+                }
+            }
+        }
+    }
+}
+
+function drawBall() {
+    ctx.beginPath();
+    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    ctx.fillStyle = "#FEDF00";
+    ctx.fill();
+    ctx.closePath();
+}
+function drawPaddle() {
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#FEDF00";
+    ctx.fill();
+    ctx.closePath();
+}
+function drawBricks() {
+    for(c=0; c<brickColumnCount; c++) {
+        for(r=0; r<brickRowCount; r++) {
+            if(bricks[c][r].status == 1) {
+                var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
+                var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle = colorBrick;
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+    }
+}
+```
+*En este punto tambien se han cambiado los titulosde Puntaje y Vidas respectivamente*
+```
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#FEDF00";
+    ctx.fillText("Puntaje: "+score, 8, 20);
+}
+function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#FEDF00";
+    ctx.fillText("Vidas: "+lives, canvas.width-65, 20);
+}
+```
+*Como un reto adicional la función draw también ha sido modificada para que se reduzca el tamaño de la paleta cada vez que la pelota colisiona con esta, en caso de que el jugador pierda la paleta volverá a su tamaño inicial,  en este punto también se han cambiado el mensaje de alerta cuando se pierde por ¡Haz perdido, Inténtalo de nuevo! y se ha añadido la línea de código que lanza de  manera aleatoria la bola hacia la izquierda o hacia la derecha cuando empieza una nueva vida.*
+```
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBricks();
+    drawBall();
+    drawPaddle();
+    drawScore();
+    drawLives();
+    collisionDetection();
+    
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+    if(y + dy < ballRadius) {
+        dy = -dy;
+    }
+    else if(y + dy > canvas.height-ballRadius) {
+        if(x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+            paddleWidth = paddleWidth * 0.9;
+        }
+        else {
+            lives--;
+            if(!lives) {
+                alert("¡Haz perdido, Intentalo de nuevo!");
+                document.location.reload();
+            }
+            else {
+                x = canvas.width/2;
+                y = canvas.height-30;
+                dx = (Math.cos( Math.PI * Math.round( Math.random() ) ))* 3;
+                dy = -3;
+                paddleX = (canvas.width-paddleWidth)/2;
+                paddleWidth = 75;
+            }
+        }
+    }
+    
+    if(rightPressed && paddleX < canvas.width-paddleWidth) {
+        paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+    
+    x += dx;
+    y += dy; 
+    requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
+</body>
+</html>
+```
