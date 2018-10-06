@@ -4,7 +4,7 @@ Juego Breakout en CANVAS
 ## LECCION 1
 Antes de que podamos programar la parte funcional del juego, necesitamos crear la estructura básica de la página y el lienzo que lo va a contener. Podemos hacerlo utilizando HTML y el elemento  canvas.
 
-*En este caso vamomos a definir el titulo del documento html con el titulo "Breakout", pero se puede poner el titulo que desee, igualmete podemos personalizar el color del fondo "background" por ahora lo vamos a poner de color negro #000000 en hexadecimal*
+*En este caso vamomos a definir el documento html con el titulo "Breakout", pero se puede poner el titulo que desee, igualmete podemos personalizar el color del fondo "background" por ahora lo vamos a poner de color negro #000000 en hexadecimal*
 ```
 <!DOCTYPE html>
 <html>
