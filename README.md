@@ -1025,7 +1025,7 @@ var ballRadius = 10;
 var x = canvas.width/2;
 var y = canvas.height-30;
 ```
-*Como el juego el comportamiento de la pelota es predecible si siempre se lanza en la misma direccion al empezar el juego, se puede agregar un calculo aleatorio para que algunas veces la pelota sea lanzada inicialmente hacia la derecha y en otras hacia la izquierda.*
+*Como el comportamiento de la pelota es predecible si siempre se lanza en la misma direccion al empezar el juego, se puede agregar un calculo aleatorio para que algunas veces la pelota sea lanzada inicialmente hacia la derecha y en otras hacia la izquierda de la siguiente forma:*
 ```
 var dx = (Math.cos( Math.PI * Math.round( Math.random() ) ))* 3;
 var dy = -3;
