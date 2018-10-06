@@ -12,9 +12,9 @@ Antes de que podamos programar la parte funcional del juego, necesitamos crear l
     <title>Breakout</title>
     <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
   
-// En este caso hemos definido el titulo del documento html con el titulo "Breakout", pero se puede ajustar al 
+*En este caso hemos definido el titulo del documento html con el titulo "Breakout", pero se puede ajustar al 
 tamaño que requiera. El color del fondo "background" esta definido como #000000 en hexadecimal pero no es 
-necesario que sea este el color por defecto. //
+necesario que sea este el color por defecto.*
 
 </head>
 <body>
