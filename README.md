@@ -11,15 +11,15 @@ Antes de que podamos programar la parte funcional del juego, necesitamos crear l
     <title>Breakout</title>
     <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
   
-// En este caso hemos definido el titulo del documento html como "Breaout", pero se puede ajustar al tamaño que requiera.  
-// El color del fondo "background" esta definido como #000000 en hexadecimal pero no es necesario que sea este el color por defecto.
+### En este caso hemos definido el titulo del documento html como "Breaout", pero se puede ajustar al tamaño que requiera.  
+### El color del fondo "background" esta definido como #000000 en hexadecimal pero no es necesario que sea este el color por defecto.
 
 </head>
 <body>
 
 <canvas id="myCanvas" width="480" height="320"></canvas>
 
-// En este caso hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320, pero se puede ajustar al tamaño que requiera.
+### En este caso hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320, pero se puede ajustar al tamaño que requiera.
 
 <script>
 // El codigo en JavaScript va a ir aqui, ya que canvas es solo el lienzo quien dibuja es javascript por lo que es necesario llamar al elemento canvas desde el script y definir en este caso el contexto 2d.
@@ -193,16 +193,87 @@ En este punto vamos a crear una paleta con la que el usuario podra interactuar c
 ## LECCION 5
 Para implementar el final del juego vamos a escribir el codigo que identifica si se te escapa la bola y alcanza el borde inferior de la pantalla.
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop - lesson 5: game over</title>
-    <style>* { padding: 0; margin: 0; } canvas { background: #eee; display: block; margin: 0 auto; }</style>
-</head>
-<body>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var ballRadius = 10;
+        var x = canvas.width/2;
+        var y = canvas.height-30;
+        var dx = 2;
+        var dy = -2;
+        var paddleHeight = 10;
+        var paddleWidth = 75;
+        var paddleX = (canvas.width-paddleWidth)/2;
+        var rightPressed = false;
+        var leftPressed = false;
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+        function keyDownHandler(e) {
+            if(e.keyCode == 39) {
+                rightPressed = true;
+            }
+            else if(e.keyCode == 37) {
+                leftPressed = true;
+            }
+        }
+        function keyUpHandler(e) {
+            if(e.keyCode == 39) {
+                rightPressed = false;
+            }
+            else if(e.keyCode == 37) {
+                leftPressed = false;
+            }
+        }
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            drawPaddle();
+            if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+            }
+            if(y + dy < ballRadius) {
+                dy = -dy;
+            }
+            // En esta seccion vamos a permitir que la pewlota solo rebote en tres partes: izquierda, arriba y  derecha, cuando alcance             la pared inferior debera comprobar si el centro de la bola se encuentra entre los extremos de la paleta, de no sea asi sera             el fin del juego y se activara un mensaje de alerta.
 
-<canvas id="myCanvas" width="480" height="320"></canvas>
+            else if(y + dy > canvas.height-ballRadius) {
+                if(x > paddleX && x < paddleX + paddleWidth) {
+                    dy = -dy;
+                }
+                else {
+                    clearInterval(game);
+                    alert("GAME OVER");
+                    document.location.reload();
+                }
+            }
+            if(rightPressed && paddleX < canvas.width-paddleWidth) {
+                paddleX += 7;
+            }
+            else if(leftPressed && paddleX > 0) {
+                paddleX -= 7;
+            }
+            x += dx;
+            y += dy;
+        }
+        var game = setInterval(draw, 10);
+    </script>
+
+## LECCION 6
+Ahora vamos a dibujar los ladrillos
 
 <script>
     var canvas = document.getElementById("myCanvas");
@@ -217,6 +288,24 @@ Para implementar el final del juego vamos a escribir el codigo que identifica si
     var paddleX = (canvas.width-paddleWidth)/2;
     var rightPressed = false;
     var leftPressed = false;
+    
+    //Primero se preparan las variables que definen la información sobre los ladrillos, como su ancho y alto, filas y columnas
+    
+    var brickRowCount = 5;
+    var brickColumnCount = 3;
+    var brickWidth = 75;
+    var brickHeight = 20;
+    var brickPadding = 10;
+    var brickOffsetTop = 30;
+    var brickOffsetLeft = 30;
+    var bricks = [];    
+    for(var c=0; c<brickColumnCount; c++) {
+        bricks[c] = [];
+        for(var r=0; r<brickRowCount; r++) {
+            bricks[c][r] = { x: 0, y: 0 };
+        }
+    }
+    
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
     function keyDownHandler(e) {
@@ -249,8 +338,26 @@ Para implementar el final del juego vamos a escribir el codigo que identifica si
         ctx.fill();
         ctx.closePath();
     }
+    
+    // Ahora vamos a crear una función para recorrer todos los bloques de la matriz y dibujarlos en la pantalla
+    function drawBricks() {
+        for(var c=0; c<brickColumnCount; c++) {
+            for(var r=0; r<brickRowCount; r++) {
+                var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
+                var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle = "#0095DD";
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+    }
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBricks();
         drawBall();
         drawPaddle();
         if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -264,7 +371,6 @@ Para implementar el final del juego vamos a escribir el codigo que identifica si
                 dy = -dy;
             }
             else {
-                clearInterval(game);
                 alert("GAME OVER");
                 document.location.reload();
             }
@@ -278,14 +384,13 @@ Para implementar el final del juego vamos a escribir el codigo que identifica si
         x += dx;
         y += dy;
     }
-    var game = setInterval(draw, 10);
+    setInterval(draw, 10);
 </script>
 
 </body>
 </html>
 
-
-## LECCION 6
+## LECCION 7
 <!DOCTYPE html>
 <html>
 <head>
