@@ -16,7 +16,7 @@ Antes de que podamos programar la parte funcional del juego, necesitamos crear l
 <body>
 <canvas id="myCanvas" width="480" height="320"></canvas>
 ```
-*En esta leccion tambien hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320, pero se puede ajustar al tamaño que requiera.*
+*En esta leccion tambien hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320px, pero se puede ajustar al tamaño que requiera.*
 ```
 <script>
 // El codigo en JavaScript va a ir aqui, ya que canvas es solo el lienzo quien dibuja es javascript por lo que
@@ -31,20 +31,20 @@ var ctx = canvas.getContext("2d");
 </html>
 ```
 ## LECCION 2
-Ahora vamos a dibujar una pelota y a hacer que se mueva. Técnicamente, estaremos pintando la pelota en la pantalla, borrándola y luego pintándola de nuevo en una posición ligeramente diferente, cada fotograma dara la impresión de movimiento, igual que se hace en las películas.(De aqui en adelante solo se mostrara el codigo en javascript ya que la parte previa que contiene el codigo en html no la volveremos a editar).
+Ahora vamos a dibujar una pelota y a hacer que se mueva. Técnicamente, estaremos pintando la pelota en la pantalla, borrándola y luego pintándola de nuevo en una posición ligeramente diferente, cada fotograma dara la impresión de movimiento, igual que se hace en las películas (De aqui en adelante solo se mostrara el codigo en javascript ya que la parte previa que contiene el codigo en html no la volveremos a editar).
 ```
 <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
 ```  
-*A continuacion se definen las variables de la pelota, las variables "x" "y" define donde estara el centro de la pelota y "dx" "dy" definen la magnitud y direccion del movimiento.*
+*A continuacion se establecen las variables de la pelota, las variables "x" "y" definen donde estara el centro de la pelota y "dx" "dy" definen la magnitud y direccion del movimiento.*
 ```  
     var x = canvas.width/2;
     var y = canvas.height-30;
     var dx = 2;
     var dy = -2;
 ```
-*Seguido a esto se crea la funcion "drawball" la cual dibujara un circulo utilizaando el contexto  "arc", esta funcion tiene en sus dos primeras variables las coordenadas del centro de la circunferencia, el  tercer argumento es el radio de la esfera, y los ultimos dos son los angulos donde inicia y termina el circulo (estos  angulos se deben poner en radianes), ademas de esto se puede definir el contexto "fillStyle" para rellenar  la figura con un color o "strokeStyle" para solo colorear su contorno. *
+*Seguido a esto se crea la funcion "drawball" la cual dibujara un circulo utilizando el contexto  "arc", esta funcion tiene en sus dos primeras variables las coordenadas del centro de la circunferencia, el  tercer argumento es el radio de la esfera, y los ultimos dos son los angulos donde inicia y termina el circulo (estos  angulos se deben poner en radianes), ademas de esto se puede definir el contexto "fillStyle" para rellenar  la figura con un color o "strokeStyle" para solo colorear su contorno.*
 ```    
     function drawBall() {
         ctx.beginPath();
@@ -102,7 +102,7 @@ Continuando con el desarrollo crearemos una funcion para detectar la colisión d
 </script>
 ```
 ## LECCION 4
-En este punto vamos a crear una paleta con la que el usuario podra interactuar con la bola.
+Ahora vamos a crear una paleta con la que el usuario podra interactuar con la bola.
 ```
 <script>
     var canvas = document.getElementById("myCanvas");
@@ -113,7 +113,7 @@ En este punto vamos a crear una paleta con la que el usuario podra interactuar c
     var dx = 2;
     var dy = -2;
 ```
-*A continuacion se definen las variables de la paleta, paddleHeight y paddleWidth son las dimenciones ancho alto de la paleta y paddleX define el lugar donde se va a dibujar en el eje x.*
+*A continuacion se definen las variables de la paleta, paddleHeight y paddleWidth que son las dimenciones ancho y alto de la paleta y paddleX define el lugar donde se va a dibujar en el eje x.*
 ``` 
     var paddleHeight = 10;
     var paddleWidth = 75;
@@ -170,7 +170,7 @@ En este punto vamos a crear una paleta con la que el usuario podra interactuar c
             dy = -dy;
         }
 ```
-*Tambien se debe actualizar el codigo de la función draw para comprobar si está pulsada la flecha izquierda o la derecha cada vez que se dibuje un fotograma.*
+*Igualmente se debe actualizar el codigo de la función draw para comprobar si está pulsada la flecha izquierda o la derecha cada vez que se dibuje un fotograma.*
 ```
         if(rightPressed && paddleX < canvas.width-paddleWidth) {
             paddleX += 7;
