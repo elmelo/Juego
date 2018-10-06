@@ -12,23 +12,25 @@ Antes de que podamos programar la parte funcional del juego, necesitamos crear l
     <title>Breakout</title>
     <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
   
-// En este caso hemos definido el titulo del documento html con el titulo "Breakout", pero se puede ajustar al tamaño que requiera.
-El color del fondo "background" esta definido como #000000 en hexadecimal pero no es necesario que sea este el color por defecto. //
+// En este caso hemos definido el titulo del documento html con el titulo "Breakout", pero se puede ajustar al 
+tamaño que requiera. El color del fondo "background" esta definido como #000000 en hexadecimal pero no es 
+necesario que sea este el color por defecto. //
 
 </head>
 <body>
 
 <canvas id="myCanvas" width="480" height="320"></canvas>
 
-// En este caso hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320, pero se puede ajustar al tamaño que requiera. //
+// En este caso hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320, pero se
+puede ajustar al tamaño que requiera. //
 
 <script>
-// El codigo en JavaScript va a ir aqui, ya que canvas es solo el lienzo quien dibuja es javascript por lo que es necesario llamar al elemento canvas desde el script y definir en este caso el contexto 2d. //
+// El codigo en JavaScript va a ir aqui, ya que canvas es solo el lienzo quien dibuja es javascript por lo que
+es necesario llamar al elemento canvas desde el script y definir en este caso el contexto 2d. //
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
     
-
 </script>
 
 </body>
@@ -38,18 +40,24 @@ var ctx = canvas.getContext("2d");
 ## LECCION 2
 Ahora vamos a dibujar una pelota y a hacer que se mueva. Técnicamente, estaremos pintando la pelota en la pantalla, borrándola y luego pintándola de nuevo en una posición ligeramente diferente cada fotograma para dar la impresión de movimiento, igual que se hace en las películas.(De aqui en adelante solo se mostrara el codigo en javascript ya que la parte previa no la volveremos a editar).
 
+```
 <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
   
-    // A continuacion se definen las variables de la pelota, las variables "x" "y" define donde estara el centro de la pelota y "dx"        "dy" definen la magnitud y direccion del movimiento.
+    // A continuacion se definen las variables de la pelota, las variables "x" "y" define donde estara el centro
+    de la pelota y "dx"        "dy" definen la magnitud y direccion del movimiento. //
   
     var x = canvas.width/2;
     var y = canvas.height-30;
     var dx = 2;
     var dy = -2;
     
-    // Seguido a esto se crea la funcion "drawball" la cual dibujara un circulo ya que utilizaremos el contexto "arc", esta funcion tiene en sus dos primeras variables las coordenadas del centro de la circunferencia, el tercer argumento es el radio de la esfera, y los ultimos dos son los angulos donde inicia y termina (estos angulos se deben poner en radianes), ademas de esto se puede definir el contexto "fillStyle" para rellenar la figura con un color o "strokeStyle" para solo colorear su contorno.
+    // Seguido a esto se crea la funcion "drawball" la cual dibujara un circulo ya que utilizaremos el contexto 
+    "arc", esta funcion tiene en sus dos primeras variables las coordenadas del centro de la circunferencia, el 
+    tercer argumento es el radio de la esfera, y los ultimos dos son los angulos donde inicia y termina (estos 
+    angulos se deben poner en radianes), ademas de esto se puede definir el contexto "fillStyle" para rellenar 
+    la figura con un color o "strokeStyle" para solo colorear su contorno. //
     
     function drawBall() {
         ctx.beginPath();
@@ -59,7 +67,9 @@ Ahora vamos a dibujar una pelota y a hacer que se mueva. Técnicamente, estaremo
         ctx.closePath();
     }
     
-    // Ahora vamos ha hacer que se dibuje cada 10 milisegundos pero que antes de esto nos limpie el lienzo con el objetivo de crear la      animacion, ya que de lo contrario solo trazara una linea con el grosor del radio del circulo.
+    // Ahora vamos ha hacer que se dibuje cada 10 milisegundos pero que antes de esto nos limpie el lienzo con 
+    el objetivo de crear la      animacion, ya que de lo contrario solo trazara una linea con el grosor del 
+    radio del circulo. //
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -70,10 +80,12 @@ Ahora vamos a dibujar una pelota y a hacer que se mueva. Técnicamente, estaremo
     
     setInterval(draw, 10);
 </script>
+```
 
 ## LECCION 3
 Continuando con el desarrollo crearemos una funcion para detectar la colisión de la pelota con la pared y si es así, cambiaremos la dirección de su movimiento en consecuencia, se debe definir una variable llamada ballRadius para facilitar los cálculos.
 
+```
 <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
@@ -106,10 +118,12 @@ Continuando con el desarrollo crearemos una funcion para detectar la colisión d
     }
     setInterval(draw, 10);
 </script>
+```
 
 ## LECCION 4
 En este punto vamos a crear una paleta con la que el usuario podra interactuar con la bola.
 
+```
 <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
@@ -191,10 +205,12 @@ En este punto vamos a crear una paleta con la que el usuario podra interactuar c
     }
     setInterval(draw, 10);
 </script>
+```
 
 ## LECCION 5
 Para implementar el final del juego vamos a escribir el codigo que identifica si se te escapa la bola y alcanza el borde inferior de la pantalla.
 
+```
     <script>
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
@@ -250,7 +266,9 @@ Para implementar el final del juego vamos a escribir el codigo que identifica si
             if(y + dy < ballRadius) {
                 dy = -dy;
             }
-            // En esta seccion vamos a permitir que la pewlota solo rebote en tres partes: izquierda, arriba y  derecha, cuando alcance             la pared inferior debera comprobar si el centro de la bola se encuentra entre los extremos de la paleta, de no sea asi sera             el fin del juego y se activara un mensaje de alerta.
+            // En esta seccion vamos a permitir que la pewlota solo rebote en tres partes: izquierda, arriba y
+            derecha, cuando alcance  la pared inferior debera comprobar si el centro de la bola se encuentra entre
+            los extremos de la paleta, de no sea asi sera el fin del juego y se activara un mensaje de alerta.
 
             else if(y + dy > canvas.height-ballRadius) {
                 if(x > paddleX && x < paddleX + paddleWidth) {
@@ -273,10 +291,11 @@ Para implementar el final del juego vamos a escribir el codigo que identifica si
         }
         var game = setInterval(draw, 10);
     </script>
-
+```
 ## LECCION 6
 Ahora vamos a dibujar los ladrillos
 
+```
 <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
