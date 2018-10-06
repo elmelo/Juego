@@ -1006,7 +1006,6 @@ Con el objetivo de que el juego cuente con mas oportunidades se le daran vidas a
 ## LECCION 11
 Con el objetivo de darle un toque innovador al juego se puede personalizar para que tenga colores y algunas mecánicas diferentes así como también se pueden adaptar los textos y mensajes de alerta al idioma español.
 ```
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -1209,5 +1208,4 @@ draw();
 </script>
 
 </body>
-</html>
 ```
