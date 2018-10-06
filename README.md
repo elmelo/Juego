@@ -2,7 +2,7 @@
 Juego Breakout en CANVAS
 
 ## LECCION 1
-Antes de que podamos programar la parte funcional del juego, necesitamos crear la estructura básica de la página que lo va a contener. Podemos hacerlo utilizando HTML y el elemento  <canvas> .
+Antes de que podamos programar la parte funcional del juego, necesitamos crear la estructura básica de la página y el lienzo que lo va a contener. Podemos hacerlo utilizando HTML y el elemento  canvas.
 
 ```
 <!DOCTYPE html>
