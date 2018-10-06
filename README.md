@@ -11,15 +11,15 @@ Antes de que podamos programar la parte funcional del juego, necesitamos crear l
     <title>Breakout</title>
     <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
   
-### En este caso hemos definido el titulo del documento html como "Breaout", pero se puede ajustar al tamaño que requiera.  
-### El color del fondo "background" esta definido como #000000 en hexadecimal pero no es necesario que sea este el color por defecto.
+#### En este caso hemos definido el titulo del documento html como "Breaout", pero se puede ajustar al tamaño que requiera.  
+#### El color del fondo "background" esta definido como #000000 en hexadecimal pero no es necesario que sea este el color por defecto.
 
 </head>
 <body>
 
 <canvas id="myCanvas" width="480" height="320"></canvas>
 
-### En este caso hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320, pero se puede ajustar al tamaño que requiera.
+#### En este caso hemos definido el tamaño del lienzo "canvas" con un ancho de 480 px y un alto de 320, pero se puede ajustar al tamaño que requiera.
 
 <script>
 // El codigo en JavaScript va a ir aqui, ya que canvas es solo el lienzo quien dibuja es javascript por lo que es necesario llamar al elemento canvas desde el script y definir en este caso el contexto 2d.
