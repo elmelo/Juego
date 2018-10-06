@@ -4,6 +4,7 @@ Juego Breakout en CANVAS
 ## LECCION 1
 Antes de que podamos programar la parte funcional del juego, necesitamos crear la estructura básica de la página y el lienzo que lo va a contener. Podemos hacerlo utilizando HTML y el elemento  canvas.
 
+*En este caso vamomos a definir el titulo del documento html con el titulo "Breakout", pero se puede poner el titulo que desee, igualmete podemos personalizar el color del fondo "background" por ahora lo vamos a poner de color negro #000000 en hexadecimal*
 ```
 <!DOCTYPE html>
 <html>
@@ -11,13 +12,7 @@ Antes de que podamos programar la parte funcional del juego, necesitamos crear l
     <meta charset="utf-8" />
     <title>Breakout</title>
     <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
- ```
-  
-*En este caso hemos definido el titulo del documento html con el titulo "Breakout", pero se puede ajustar al*
-*tamaño que requiera. El color del fondo "background" esta definido como #000000 en hexadecimal pero no es*
-*necesario que sea este el color por defecto.*
 
-```
 </head>
 <body>
 
@@ -38,29 +33,23 @@ var ctx = canvas.getContext("2d");
 </body>
 </html>
 ```
-
 ## LECCION 2
 Ahora vamos a dibujar una pelota y a hacer que se mueva. Técnicamente, estaremos pintando la pelota en la pantalla, borrándola y luego pintándola de nuevo en una posición ligeramente diferente cada fotograma para dar la impresión de movimiento, igual que se hace en las películas.(De aqui en adelante solo se mostrara el codigo en javascript ya que la parte previa no la volveremos a editar).
-
 ```
 <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
-  
-    // A continuacion se definen las variables de la pelota, las variables "x" "y" define donde estara el centro
-    de la pelota y "dx"        "dy" definen la magnitud y direccion del movimiento. //
-  
+```  
+*A continuacion se definen las variables de la pelota, las variables "x" "y" define donde estara el centro de la pelota y "dx"        "dy" definen la magnitud y direccion del movimiento.*
+
+```  
     var x = canvas.width/2;
     var y = canvas.height-30;
     var dx = 2;
     var dy = -2;
-    
-    // Seguido a esto se crea la funcion "drawball" la cual dibujara un circulo ya que utilizaremos el contexto 
-    "arc", esta funcion tiene en sus dos primeras variables las coordenadas del centro de la circunferencia, el 
-    tercer argumento es el radio de la esfera, y los ultimos dos son los angulos donde inicia y termina (estos 
-    angulos se deben poner en radianes), ademas de esto se puede definir el contexto "fillStyle" para rellenar 
-    la figura con un color o "strokeStyle" para solo colorear su contorno. //
-    
+```
+* Seguido a esto se crea la funcion "drawball" la cual dibujara un circulo ya que utilizaremos el contexto  "arc", esta funcion tiene en sus dos primeras variables las coordenadas del centro de la circunferencia, el  tercer argumento es el radio de la esfera, y los ultimos dos son los angulos donde inicia y termina (estos  angulos se deben poner en radianes), ademas de esto se puede definir el contexto "fillStyle" para rellenar  la figura con un color o "strokeStyle" para solo colorear su contorno. *
+```    
     function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, 10, 0, Math.PI*2);
@@ -83,10 +72,8 @@ Ahora vamos a dibujar una pelota y a hacer que se mueva. Técnicamente, estaremo
     setInterval(draw, 10);
 </script>
 ```
-
 ## LECCION 3
 Continuando con el desarrollo crearemos una funcion para detectar la colisión de la pelota con la pared y si es así, cambiaremos la dirección de su movimiento en consecuencia, se debe definir una variable llamada ballRadius para facilitar los cálculos.
-
 ```
 <script>
     var canvas = document.getElementById("myCanvas");
@@ -106,8 +93,9 @@ Continuando con el desarrollo crearemos una funcion para detectar la colisión d
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBall();
-  
-        // Esta es la parte del codigo que añade la deteccion de las colisiones en la funcion "Draw"
+```
+*Esta es la parte del codigo que añade la deteccion de las colisiones en la funcion "Draw"*
+```
         if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
             dx = -dx;
         }
