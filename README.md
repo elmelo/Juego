@@ -1010,14 +1010,14 @@ Con el objetivo de darle un toque innovador al juego se puede personalizar para 
 <head>
     <meta charset="utf-8" />
     <title>Breakout</title>
-```
-*Lo primero que haremos será cambiar el color del fondo definiendo así el background: #000000; lo que hará que quede de color negro.* ```
+
     <style>* { padding: 0; margin: 0; } canvas { background: #000000; display: block; margin: 0 auto; }</style>
 </head>
 <body>
-
 <canvas id="myCanvas" width="480" height="320"></canvas>
-
+```
+*Lo primero que hicimos fue cambiar el color del fondo definiendo así el background: #000000; lo que hará que quede de color negro.*
+```
 <script>
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
